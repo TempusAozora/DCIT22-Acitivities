@@ -24,9 +24,9 @@ def problem1():
 
       else:
             print("Not eligible")
-
 #Delivery Fee Calculator
 def problem2():
+
   online_store = {
         1:{
               "item_number":1, "item_name":"Make-up Set",
@@ -42,22 +42,10 @@ def problem2():
         }
   }
 
-  address = {
-        1:{
-            "Number": 1, "Address":"Molino IV", "distance":"3km", "fee":40},
-        2:{
-            "Number": 2, "Address":"Panpaan3",  "distance":"7km",
-              "fee":60
-        },
-        3:{
-            "Number": 3,"Address":"Dasma Cavite", "distance":"8km",
-            "fee":80
-        }
-  }
-
-
   user_is_a_Member = True
-
+  delivery_fee = 0
+  total_delivery_fee = 0
+  total_amount = 0
 
   print("Welcome to shoppers please pick your order (just type the number of the item you want)")
   line()
@@ -66,72 +54,84 @@ def problem2():
   print(online_store[2])
   line()
   print(online_store[3])
+  line()
 
 
-
+  print("")
+  line()
   user_order = int(input("item_number: "))
-  print("")
-  print("")
-  print("")
-  line()
-  print(address[1])
-  line()
-  print(address[2])
-  line()
-  print(address[3])
   line()
 
-  user_address = int(input("Whats your address? "))
-  membership = input("are you a member? y/n? ").upper()
+  print("")
+  line()
+  distance = float(input("How far are you? input the distance: "))
+  line()
+
+  if 1.0 <= distance <= 3.9:
+      delivery_fee += 40
+
+  elif 4.0 <= distance < 8.0:
+      delivery_fee += 60
+
+  else: #above 8km
+      delivery_fee += 80
+
+  print("")
+  line()    
+  membership = input("are you a member? type y if yes and n if no ").upper()
+  line()
 
   if membership != "Y":
         user_is_a_Member = False
 
-  delievery_fee = address[user_address]["fee"]
-  total_order_amount = online_store[user_order]["price"]
+  order_amount = online_store[user_order]["price"]
 
-  if total_order_amount >= 1000:
-        total_delievery_fee = delievery_fee - delievery_fee
-        total_amount = total_order_amount + total_delievery_fee
+  if order_amount >= 1000:
+      
+        total_amount = order_amount
 
         print("")
         print("")
         line()
         if user_is_a_Member:
-              print("Membership discount: Can't be applied")
+              print("Membership discount: Can't be applied to orders above 1000")
 
-        print(f"Delievery fee: {delievery_fee}")
-        print(f"Total delievery fee: {total_delievery_fee}")
-        print(f"Total order amount: {total_order_amount}")
-        print(f"Total amount to pay: {total_order_amount}")
+        
+        print(f"Delievery fee: {delivery_fee}")
+        print(f"Total order amount: {order_amount}")
+        print(f"Total delievery fee: {total_delivery_fee}")
+        print(f"Total amount to pay: {total_amount}")
         line()
+
   elif user_is_a_Member:
+        
         discount = 0.20 
-        total_delievery_fee = delievery_fee - (delievery_fee * discount)
-        total_amount = total_order_amount + total_delievery_fee
+        total_delivery_fee = delivery_fee - (delivery_fee * discount)
+        total_amount = order_amount + total_delivery_fee
 
         print("")
         print("")
         line()
+        print(f"Total order amount: {order_amount}")
+        print(f"Delievery fee: {delivery_fee}")
         print(f"Membership discount: {discount}0")
-        print(f"Delievery fee: {delievery_fee}")
-        print(f"Total order amount: {total_order_amount}")
-        print(f"Total delievery fee: {total_delievery_fee}")
+        print(f"Total delievery fee: {total_delivery_fee}")
         print(f"Total amount to pay: {total_amount}")
         line()
 
   else:
-      total_amount = total_order_amount + delievery_fee
+      
+      total_amount = order_amount
+      total_delivery_fee = delivery_fee
       print("")
       print("")
       line()
+      print(f"Total order amount: {order_amount}")
+      print(f"Delievery fee: {delivery_fee}")
       print(f"Membership discount: Not a member")
-      print(f"Delievery fee: {delievery_fee}")
-      print(f"Total order amount: {total_order_amount}")
-      print(f"Total delievery fee: {delievery_fee}")
+      print(f"Total delievery fee: {total_delivery_fee}")
       print(f"Total amount to pay: {total_amount}")
       line()
-
 
 
 def options():
