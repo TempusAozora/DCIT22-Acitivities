@@ -38,7 +38,7 @@ def problem2():
         },
         3:{
               "item_number":3, "item_name":"RTX 4090",
-              "price":1000
+              "price":1200
         }
   }
 
@@ -78,7 +78,7 @@ def problem2():
 
   print("")
   line()    
-  membership = input("are you a member? type y if yes and n if no ").upper()
+  membership = input("are you a member? type y if yes and n if no: ").upper()
   line()
 
   if membership != "Y":
@@ -91,10 +91,12 @@ def problem2():
         total_amount = order_amount
 
         print("")
-        print("")
+        print("RESULT")
         line()
         if user_is_a_Member:
               print("Membership discount: Can't be applied to orders above 1000")
+        else:
+             print("Membership discount: Not a member")
 
         
         print(f"Delievery fee: {delivery_fee}")
@@ -110,7 +112,7 @@ def problem2():
         total_amount = order_amount + total_delivery_fee
 
         print("")
-        print("")
+        print("RESULT")
         line()
         print(f"Total order amount: {order_amount}")
         print(f"Delievery fee: {delivery_fee}")
@@ -121,10 +123,11 @@ def problem2():
 
   else:
       
-      total_amount = order_amount
+     
       total_delivery_fee = delivery_fee
+      total_amount = order_amount + total_delivery_fee
       print("")
-      print("")
+      print("RESULT")
       line()
       print(f"Total order amount: {order_amount}")
       print(f"Delievery fee: {delivery_fee}")
@@ -134,52 +137,32 @@ def problem2():
       line()
 
 
+
+
+
+
+
+
 def options():
-      print("1. Scholarship Eligibility Checker")
-      print("2. Delivery Fee Calculator")
-      pick = int(input("Please pili po kayo: "))
-      print("")
-      print("")
-      if pick == 1:
-            problem1()
-      else:
-            problem2()
+      run = True
+      while run:
+            print("")
+            print("")
+            print("")
+            print("1. Scholarship Eligibility Checker")
+            print("2. Delivery Fee Calculator")
+            print("3. Exit the program")
+            pick = int(input("Please pili po kayo: "))
+            print("")
+            print("")
+            if pick == 1:
+                  problem1()
+            elif pick == 2:
+                  problem2()
+            else:
+                  print("Program terminated")
+                  run = False
+
 
 options()
 
-
-#Scholarship Eligibility Checker Outputs
-#Partial only if mataas ang income
-
-"""
-Welcome to shoppers please pick your order (just type the number of the item you want)
-=========================================================================
-{'item_number': 1, 'item_name': 'Make-up Set', 'price': 200}
-=========================================================================
-{'item_number': 2, 'item_name': 'Milo Energy drink', 'price': 500}
-=========================================================================
-{'item_number': 3, 'item_name': 'RTX 4090', 'price': 1000}
-item_number:
-
-
-=========================================================================
-{'Number': 1, 'Address': 'Molino IV', 'distance': '3km', 'fee': 40}
-=========================================================================
-{'Number': 2, 'Address': 'Panpaan3', 'distance': '7km', 'fee': 60}
-=========================================================================
-{'Number': 3, 'Address': 'Dasma Cavite', 'distance': '8km', 'fee': 80}
-=========================================================================
-Whats your address? 2
-are you a member? y/n? y
-
-
-=========================================================================
-Membership discount: Can't be applied
-Delievery fee: 60
-Total delievery fee: 0
-Total order amount: 1000
-Total amount to pay: 1000
-=========================================================================
-
-
-""" 
