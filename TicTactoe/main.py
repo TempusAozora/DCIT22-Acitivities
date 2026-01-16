@@ -10,9 +10,13 @@ from tic_tac_toe import Game
 from colors import *
 from button import Button
 <<<<<<< HEAD
+<<<<<<< HEAD
 from ScreenGUI import Gui
 =======
 >>>>>>> b3ab3177f80d748ab2779b0fdd2984c3d3f9f803
+=======
+from ScreenGUI import Gui
+>>>>>>> f357de79b485dd07e713abf682daa3590fdabc09
 
 pygame.init()
 
@@ -71,7 +75,7 @@ draw_surface = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
 draw_surface.fill((0,0,0,0))
 
 #FONTS CUSTOMIZED
-Header_title = pygame.font.Font('./Font/kids_magazine/Kids Magazine.ttf', 40)
+
 BUTTON_FONT = pygame.font.Font('./Font/grobold/GROBOLD.ttf', 27)
 # BUTTON_FONT = pygame.font.Font('./Font/compro_oro/Compro Oro.ttf', 27)
 
@@ -81,10 +85,16 @@ exit_button = Button(230, 340, 300, 80, "EXIT", EXIT_BUTTON_COLOR, EXIT_BUTTON_H
 simple_mode_button = Button(200, 250, 360, 80, "SIMPLE MODE", SIMPLE_MODE_BUTTON_COLOR, SIMPLE_MODE_BUTTON_HOVER_COLOR, BUTTON_FONT)
 ultimate_mode_button = Button(200, 340, 360, 80, "ULTIMATE TIC TAC TOE", MODIFIED_MODE_BUTTON_COLOR, MODIFIED_MODE_BUTTON_HOVER_COLOR, BUTTON_FONT)
 
-state_m = "start"
+# state_m = "start"
 game = Game(draw_surface)
 
+<<<<<<< HEAD
 >>>>>>> b3ab3177f80d748ab2779b0fdd2984c3d3f9f803
+=======
+current_gui = Gui("TIC TAC TOE",(180, 100),[start_button, exit_button])
+previous_buttons = [start_button, exit_button]
+
+>>>>>>> f357de79b485dd07e713abf682daa3590fdabc09
 is_running = True
 while is_running:
     mouse_position = pygame.mouse.get_pos()
@@ -96,6 +106,7 @@ while is_running:
         if event.type == pygame.QUIT:
             is_running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
+<<<<<<< HEAD
 <<<<<<< HEAD
             # block input on bot delay
             if game.main_tic_tac_toe and not game.main_tic_tac_toe.finished:
@@ -203,10 +214,15 @@ while is_running:
 
 =======
             if state_m == "start":
+=======
+>>>>>>> f357de79b485dd07e713abf682daa3590fdabc09
                 if start_button.is_clicked(mouse_position):
-                    state_m = "mode_selection"
+                    
+                    current_gui = Gui("MODE SELECTION",(130, 100),[simple_mode_button, ultimate_mode_button])
+                    print("CLICK")
                 elif exit_button.is_clicked(mouse_position):
                     is_running = False
+<<<<<<< HEAD
             elif state_m == "mode_selection":
                 if simple_mode_button.is_clicked(mouse_position):
                     state_m = "game"
@@ -224,8 +240,33 @@ while is_running:
     elif state_m == "mode_selection":
         simple_mode_button.button_update(mouse_position)
         ultimate_mode_button.button_update(mouse_position)
+=======
+                elif simple_mode_button.is_clicked(mouse_position):
+                    current_gui = Gui("SIMPLE MODE",(180,100),[player_mode_button, computer_mode_button])
+                elif ultimate_mode_button.is_clicked(mouse_position):
+                    current_gui = Gui("ULTIMATE MODE",(140,100),[player_mode_button, computer_mode_button])
+            
+                elif player_mode_button.is_clicked(mouse_position):
+                    print("PLAYER MODE")
+                elif computer_mode_button.is_clicked(mouse_position):
+                    current_gui = Gui("COMPUTER DIFFICULTY",(50,50),[easy_mode_button, medium_mode_button, hard_mode_button])
+                    print("COMPUTER MODE")
+                elif easy_mode_button.is_clicked(mouse_position):
+                    print("EASY MODE!")
+                elif medium_mode_button.is_clicked(mouse_position):
+                    print("MEDIUM MODE!")
+                elif hard_mode_button.is_clicked(mouse_position):
+                    print("HARD MODE!")    
+>>>>>>> f357de79b485dd07e713abf682daa3590fdabc09
 
+    if current_gui.buttons != previous_buttons:
+        for button in previous_buttons:
+            button.enabled = False
+    
+    current_gui.update()
+    previous_buttons = current_gui.buttons
     # screen.fill(DARK_NAVY)
+<<<<<<< HEAD
 
         #START BUTTON
     if state_m == "start":
@@ -251,6 +292,9 @@ while is_running:
     elif state_m == "game":
         game.update()
         screen.blit(draw_surface, (0,0))
+=======
+    current_gui.draw(screen=screen)
+>>>>>>> f357de79b485dd07e713abf682daa3590fdabc09
 
     pygame.display.update()
     clock.tick(60)

@@ -4,6 +4,9 @@ import sys
 
 pygame.init()
 
+from sound_manager import SoundManager
+sound = SoundManager()
+
 screen_width = 750
 screen_height = 550
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -92,8 +95,10 @@ while is_running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if state_m == "start":
                 if start_button.is_clickedB(mouse_posi):
+                    sound.play_click()
                     state_m = "mode_selection"
                 elif exit_button.is_clickedB(mouse_posi):
+                    sound.play_click()
                     is_running = False
 <<<<<<< HEAD
                     
@@ -101,9 +106,11 @@ while is_running:
 >>>>>>> b3ab3177f80d748ab2779b0fdd2984c3d3f9f803
             elif state_m == "mode_selection":
                 if simpleMode_button.is_clickedB(mouse_posi):
+                    sound.play_click()
                     print("Simple Mode Selected")
                     #PAKI LAGAY DITO YUNG SET NG SIMPLE MODE
                 elif modifieMode_button.is_clickedB(mouse_posi):
+                    sound.play_click()
                     print("Ultimate Tic tac toe Mode Selected")
                     #PAKI LAGAY DITO YUNG SET NG ULTIMATE MODE
                 
