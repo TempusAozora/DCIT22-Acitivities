@@ -95,7 +95,10 @@ while is_running:
                     state_m = "mode_selection"
                 elif exit_button.is_clickedB(mouse_posi):
                     is_running = False
+<<<<<<< HEAD
                     
+=======
+>>>>>>> b3ab3177f80d748ab2779b0fdd2984c3d3f9f803
             elif state_m == "mode_selection":
                 if simpleMode_button.is_clickedB(mouse_posi):
                     print("Simple Mode Selected")

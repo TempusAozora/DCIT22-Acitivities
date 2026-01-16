@@ -3,7 +3,11 @@ import math
 import random
 
 _PROBABILITIES = { # [win, draw, lose]
+<<<<<<< HEAD
     "hard": [1, 0, 0],
+=======
+    "hard": [0.9, 0.05, 0.05],
+>>>>>>> b3ab3177f80d748ab2779b0fdd2984c3d3f9f803
     "medium": [0.3, 0.5, 0.2],
     "easy": [0.1, 0.4, 0.5]
 }
@@ -12,16 +16,24 @@ class Bot:
     def __init__(self, turn_status, difficulty="hard"):
         self.difficulty = difficulty
         self.turn_status = turn_status
+<<<<<<< HEAD
 
         self.delay = 0.5
         self.bot_turn = False
+=======
+        self.turn_delay = 0.3
+>>>>>>> b3ab3177f80d748ab2779b0fdd2984c3d3f9f803
 
     def choose(self, grid):
         outcome_data = self.evaluate(grid)
 
         outcomes = [self.turn_status, 0, -self.turn_status]
 
+<<<<<<< HEAD
         base_probability = _PROBABILITIES[self.difficulty].copy()
+=======
+        base_probability = _PROBABILITIES[self.difficulty]
+>>>>>>> b3ab3177f80d748ab2779b0fdd2984c3d3f9f803
 
         outcome_choices = []
         probabilities_list = []
@@ -39,6 +51,15 @@ class Bot:
             probabilities_list[0] += removed_sum
 
         output = self.get_choice_from_probability(probabilities_list)
+<<<<<<< HEAD
+=======
+
+        print(output)
+        print(probabilities_list)
+
+        print(outcome_choices)
+
+>>>>>>> b3ab3177f80d748ab2779b0fdd2984c3d3f9f803
         choice_list = outcome_choices[output]
         return random.choice(choice_list)
 
