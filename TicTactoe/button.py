@@ -1,6 +1,9 @@
 import pygame
 from colors import *
 
+from sound_manager import SoundManager
+sfx = SoundManager()
+
 class Button():
     def __init__(self, x, y, width, height, text, color, hover_color, font):
         self.rect = pygame.Rect(x, y, width, height)
@@ -9,6 +12,7 @@ class Button():
         self.hover_color = hover_color
         self.current_color = color
         self.font = font
+        self.enabled = False
 
     def draw_button_sets(self, surface):
         # BUTTON SHADOW
@@ -32,4 +36,9 @@ class Button():
             self.current_color = self.color
 
     def is_clicked(self, mouse_position):
-        return self.rect.collidepoint(mouse_position)
+        if self.enabled:
+            if self.rect.collidepoint(mouse_position):
+                sfx.play_click()
+            return self.rect.collidepoint(mouse_position)
+        else:
+            return False
