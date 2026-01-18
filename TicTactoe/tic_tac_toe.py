@@ -1,21 +1,19 @@
-import pygame
 import math
 from bot import Bot
 
-from sound_manager import SoundManager
-sfx = SoundManager()
+from sound_manager import *
+from colors import *
+import pygame
 
 # Tic tac toe class
 class TicTacToe:
-    def __init__(self, size=200, position=(0, 0), destroy_on_finished=False, transparent_on_finished=False):
+    def __init__(self, size=200, position=(0, 0), transparent_on_finished=False):
         self.size = size
 
         self.winner = 0
         self.finished = False
 
         self.position = position
-
-        self.destroy_on_finished = destroy_on_finished
         self.transparent_on_finished = transparent_on_finished
 
         self.grid = [
@@ -23,15 +21,9 @@ class TicTacToe:
             [0, 0, 0],
             [0, 0, 0]
         ]
+
         self.matched_tiles = []
         self.occupied_tiles = 0
-
-        self.grid_color = (255, 255, 255)
-        self.circle_color = (0, 0, 255)
-        self.cross_color = (255, 0, 0)
-        self.matched_color = (0, 255, 0)
-
-        self.line_thickness = 5
 
     def get_tile_from_mouse(self, screen):  # O(1)
         mouse_pos = pygame.mouse.get_pos()
@@ -63,7 +55,7 @@ class TicTacToe:
                 self.grid[i][j] = -1
 
             self.occupied_tiles += 1
-            sfx.play_bubble_pop()
+            bubble_pop_sound.play()
 
             self.matched_tiles, _ = self.check_game(self.grid)
             if len(self.matched_tiles) > 0:
@@ -108,6 +100,7 @@ class TicTacToe:
         offset_center = (x / 2 + self.position[0], y / 2 + self.position[1])
         offset = (offset_center[0] - self.size / 3, offset_center[1] - self.size / 3)
 
+        line_thickness = 5
         alpha = 255
         if self.finished and self.transparent_on_finished:
             alpha = 50
@@ -116,79 +109,79 @@ class TicTacToe:
         for x in (-1, 1):
             pygame.draw.line(
                 screen,
-                self.grid_color + (alpha,),
+                GRID_COLOR + (alpha,),
                 (self.size / 2 * x / 3 + offset_center[0], self.size / 2 + offset_center[1]),
                 (self.size / 2 * x / 3 + offset_center[0], -self.size / 2 + offset_center[1]),
-                width=self.line_thickness
+                width=line_thickness
             )
 
         for y in (-1, 1):
             pygame.draw.line(
                 screen,
-                self.grid_color + (alpha,),
+                GRID_COLOR + (alpha,),
                 (self.size / 2 + offset_center[0], self.size / 2 * y / 3 + offset_center[1]),
                 (-self.size / 2 + offset_center[0], self.size / 2 * y / 3 + offset_center[1]),
-                width=self.line_thickness
+                width=line_thickness
             )
 
         # create circles or cross on the grid
         for x in range(3):
             for y in range(3):
                 if self.grid[y][x] == 1:
-                    pos = (x * self.size / 2 * (2 / 3) + offset[0],
-                           y * self.size / 2 * (2 / 3) + offset[1])
-                    pygame.draw.circle(screen, self.circle_color + (alpha,), pos, self.size / 8, self.line_thickness)
+                    pos = (x * self.size / 3 + offset[0],
+                           y * self.size / 3 + offset[1])
+                    pygame.draw.circle(screen, CIRCLE_COLOR + (alpha,), pos, self.size / 8, line_thickness)
 
                 elif self.grid[y][x] == -1:
-                    pos = (x * self.size / 2 * (2 / 3) + offset[0],
-                           y * self.size / 2 * (2 / 3) + offset[1])
+                    pos = (x * self.size / 3 + offset[0],
+                           y * self.size / 3 + offset[1])
                     pygame.draw.line(
                         screen,
-                        self.cross_color + (alpha,),
+                        CROSS_COLOR + (alpha,),
                         (pos[0] + self.size / 8, pos[1] + self.size / 8),
                         (pos[0] - self.size / 8, pos[1] - self.size / 8),
-                        width=self.line_thickness
+                        width=line_thickness
                     )
                     pygame.draw.line(
                         screen,
-                        self.cross_color + (alpha,),
+                        CROSS_COLOR + (alpha,),
                         (pos[0] - self.size / 8, pos[1] + self.size / 8),
                         (pos[0] + self.size / 8, pos[1] - self.size / 8),
-                        width=self.line_thickness
+                        width=line_thickness
                     )
 
         # draw line when game ended
         if len(self.matched_tiles) > 0:
             start_y, start_x = self.matched_tiles[0][0], self.matched_tiles[0][1]
             end_y, end_x = self.matched_tiles[-1][0], self.matched_tiles[-1][1]
-            start_pos = (start_x * self.size / 2 * (2 / 3) + offset[0],
-                         start_y * self.size / 2 * (2 / 3) + offset[1])
-            end_pos = (end_x * self.size / 2 * (2 / 3) + offset[0],
-                       end_y * self.size / 2 * (2 / 3) + offset[1])
+            start_pos = (start_x * self.size / 3 + offset[0],
+                         start_y * self.size / 3 + offset[1])
+            end_pos = (end_x * self.size / 3 + offset[0],
+                       end_y * self.size / 3 + offset[1])
 
             pygame.draw.line(
                 screen,
-                self.matched_color + (alpha,),
+                MATCHED_COLOR + (alpha,),
                 start_pos,
                 end_pos,
-                width=self.line_thickness
+                width=line_thickness
             )
 
         # draw line when game ended
         if len(self.matched_tiles) > 0:
             start_y, start_x = self.matched_tiles[0][0], self.matched_tiles[0][1]
             end_y, end_x = self.matched_tiles[-1][0], self.matched_tiles[-1][1]
-            start_pos = (start_x * self.size / 2 * (2 / 3) + offset[0],
-                         start_y * self.size / 2 * (2 / 3) + offset[1])
-            end_pos = (end_x * self.size / 2 * (2 / 3) + offset[0],
-                       end_y * self.size / 2 * (2 / 3) + offset[1])
+            start_pos = (start_x * self.size / 3 + offset[0],
+                         start_y * self.size / 3 + offset[1])
+            end_pos = (end_x * self.size / 3 + offset[0],
+                       end_y * self.size / 3 + offset[1])
 
             pygame.draw.line(
                 screen,
-                self.matched_color + (alpha,),
+                MATCHED_COLOR + (alpha,),
                 start_pos,
                 end_pos,
-                width=self.line_thickness
+                width=line_thickness
             )
 
 class Game:
@@ -240,8 +233,8 @@ class Game:
             row = []
             for j in range(3):
                 mini_tic_tac_toe = TicTacToe(size=data["size"] // 4, position=(
-                data["size"] / 2 * (2 / 3) * j + data["position"][0] - data["size"] / 3,
-                data["size"] / 2 * (2 / 3) * i + data["position"][1] - data["size"] / 3
+                data["size"] / 3 * j + data["position"][0] - data["size"] / 3,
+                data["size"] / 3 * i + data["position"][1] - data["size"] / 3
                 ),
                                              transparent_on_finished=True)
                 row.append(mini_tic_tac_toe)
@@ -284,27 +277,29 @@ class Game:
                         continue
 
                     has_put_in_tile = t.put_object_on_tile(self.screen, self.put_circle_mini)
-                    if has_put_in_tile:
-                        if has_put_in_tile == "occupied":
+                    if not has_put_in_tile:
+                        continue
+
+                    if has_put_in_tile == "occupied":
+                        return
+
+                    self.put_circle_mini = not self.put_circle_mini
+                    if t.finished:
+                        if t.winner == 1:
+                            put_on_main_tile(True)
+                        elif t.winner == -1:
+                            put_on_main_tile(False)
+                        else:
+                            put_on_main_tile()
+
+                        if self.main_tic_tac_toe.finished:
                             return
 
-                        self.put_circle_mini = not self.put_circle_mini
-                        if t.finished:
-                            if t.winner == 1:
-                                put_on_main_tile(True)
-                            elif t.winner == -1:
-                                put_on_main_tile(False)
-                            else:
-                                put_on_main_tile()
+                    if self.bot:
+                        self.bot.bot_turn = True
 
-                            if self.main_tic_tac_toe.finished:
-                                return
-
-                        if self.bot:
-                            self.bot.bot_turn = True
-
-                        self.mini_tile_input_coords = (i,j)
-                        return
+                    self.mini_tile_input_coords = (i,j)
+                    return
 
     def bot_put(self):
         if self.main_tic_tac_toe.finished:

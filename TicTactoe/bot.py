@@ -9,21 +9,18 @@ _PROBABILITIES = { # [win, draw, lose]
 }
 
 class Bot:
-    def __init__(self, turn_status, difficulty="hard"):
+    def __init__(self, turn_status=-1, difficulty="hard"):
         self.difficulty = difficulty
         self.turn_status = turn_status
 
         self.delay = 0.5
         self.bot_turn = False
-        self.turn_delay = 0.3
 
     def choose(self, grid):
         outcome_data = self.evaluate(grid)
-
         outcomes = [self.turn_status, 0, -self.turn_status]
 
         base_probability = _PROBABILITIES[self.difficulty].copy()
-        base_probability = _PROBABILITIES[self.difficulty]
 
         outcome_choices = []
         probabilities_list = []
